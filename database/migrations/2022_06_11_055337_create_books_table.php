@@ -17,7 +17,7 @@ class CreateBooksTable extends Migration
             $table->id();
 
             $table->string('title', 150);
-            $table->string('author', 150);
+            $table->string('author', 100);
             $table->integer('year_of_publication')->nullable();
             $table->string('description', 2000);
             $table->string('ISBN')->unique();

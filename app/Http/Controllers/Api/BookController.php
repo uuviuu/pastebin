@@ -2,64 +2,41 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Models\Book;
-use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Http\Resources\BookResource;
+use App\Http\Requests\BookStoreRequest;
+use App\Http\Requests\BookUpdateRequest;
 
-class BookController extends Controller
+class BookController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        return Book::all();
+        return BookResource::collection(Book::all());
+    }
+    
+    public function store(BookStoreRequest $request)
+    {
+        $data = $request->validated();
+        $this->service->store($data);
+        return $data;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function show(Book $book)
     {
-        //
+        return new BookResource($book);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function update(BookUpdateRequest $request, Book $book)
     {
-        return Book::find($id);
+        $data = $request->validated();
+        $this->service->update($data, $book);
+        return $data;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function destroy(Book $book)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $book->delete();
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }
