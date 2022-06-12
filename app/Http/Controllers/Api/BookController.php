@@ -4,18 +4,19 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Book;
 use Illuminate\Http\Response;
+use App\Http\Requests\BookRequest;
+use App\Http\Requests\FilterRequest;
 use App\Http\Resources\BookResource;
-use App\Http\Requests\BookStoreRequest;
-use App\Http\Requests\BookUpdateRequest;
 
 class BookController extends BaseController
 {
     public function index()
     {
-        return BookResource::collection(Book::all());
+        $books = Book::paginate(5);
+        return BookResource::collection($books);
     }
     
-    public function store(BookStoreRequest $request)
+    public function store(BookRequest $request)
     {
         $data = $request->validated();
         $this->service->store($data);
@@ -27,7 +28,7 @@ class BookController extends BaseController
         return new BookResource($book);
     }
 
-    public function update(BookUpdateRequest $request, Book $book)
+    public function update(BookRequest $request, Book $book)
     {
         $data = $request->validated();
         $this->service->update($data, $book);
