@@ -24,7 +24,7 @@ services:
    container_name: book_catalog_app
 
   db:
-   image: mysql:8.0-oracle
+   image: mysql:8.0
    restart: always
    volumes:
      - ./tmp/db:/var/lib/mysql

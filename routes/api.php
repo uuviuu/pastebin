@@ -24,5 +24,5 @@ Route::apiResources([
     '/books' => BookController::class,
 ]);
 
-Route::post('/search', [SearchController::class, 'search']);
-Route::post('/filter', [SearchController::class, 'filter']);
+Route::get('/search', [SearchController::class, 'search']);
+Route::get('/filter', [SearchController::class, 'filter']);

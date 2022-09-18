@@ -7,12 +7,21 @@
 Поддерживает следующие методы и URL:
   - GET, /api/books - выводит все книги
   - POST, /api/books - добавляет книгу
+  (примерное содержание post запроса, отправленного в JSON, поле "ISBN" должно быть уникальным:
+{
+    "title": "Title",
+    "author": "Author",
+    "year_of_publication": 2022,
+    "ISBN": "ISBNISBN",
+    "description": "DescriptionDescriptionDescription"
+}
+  )
   - GET, /api/books/{id} - выводит информацию об одной книге
   - PUT, /api/books/{id} - редактирует книгу
   - DELETE, /api/books/{id} - удаляет книгу
-  - POST, /api/search - принимает значения title и author, выводит результат, если эти значения содержатся в значениях базы данных
-  - POST, /api/filter - принимает значения title и author, выводит результат, если эти значения соответсвуют значениям в базе данных
-
+  - GET, /api/search - принимает значения title и author, выводит результат, если эти значения содержатся в значениях базы данных (например, http://localhost:8876/api/search?title=Mr)
+  - GET, /api/filter - принимает значения title и author, выводит результат, если эти значения соответсвуют значениям в базе данных
+  (например, http://localhost:8876/api/filter?title=Miss.)
 Для упрощения развертывания проекта предусмотрен Docker
 
 Для заполнения базы данных используйте команду php artisan migrate --seed
@@ -27,7 +36,7 @@
 
 - создайте папку projects в каталоге //wsl$/Ubuntu-22.04/home/имя_пользователя/projects
 
-- в данную папку установите репозиторий командой git clone https://github.com/uuviuu/book_catalog 
+- в данную папку установите репозиторий командой git clone https://github.com/uuviuu/book_catalog.git
 
 Для установки данного проекта введите команды:
 

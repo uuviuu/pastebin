@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Models\Book;
 use Illuminate\Http\Response;
 use App\Http\Requests\BookRequest;
-use App\Http\Requests\FilterRequest;
 use App\Http\Resources\BookResource;
 
 class BookController extends BaseController
