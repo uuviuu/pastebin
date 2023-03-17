@@ -17,11 +17,11 @@ class PasteResource extends JsonResource
     {
         return [
             'created_by_id' => $this->created_by_id,
-            'expiration_time' => $this->expiration_time,
+            'paste' => $this->paste,
+            'locale_lang' => $this->locale_lang,
             'access' => $this->access,
             'hash' => $this->hash,
-            'locale_lang' => $this->locale_lang,
-            'paste' => $this->paste,
+            'expiration_time' => $this->expiration_time,
         ];
     }
 }
