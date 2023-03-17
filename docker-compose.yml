@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services: 
   nginx:
@@ -7,10 +7,10 @@ services:
       - ./:/var/www/
       - ./_docker/nginx/conf.d/:/etc/nginx/conf.d/
     ports:
-      - 8876:80
+      - "8876:80"
     depends_on:
       - app
-    container_name: book_catalog_nginx
+    container_name: pastebin_nginx
     
   app:
    build:
@@ -21,17 +21,20 @@ services:
    user: 1000:1000
    depends_on: 
      - db
-   container_name: book_catalog_app
+   container_name: pastebin_app
 
   db:
-   image: mysql:8.0
-   restart: always
-   volumes:
-     - ./tmp/db:/var/lib/mysql
-   environment: 
-    MYSQL_DATABASE: book_catalog 
-    MYSQL_ROOT_PASSWORD: root
-   ports:
-     - 8101:3306
-   command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci 
-   container_name: project_db
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "6432:5432"
+    container_name: pastebin_db
+    volumes:
+       - db:/var/lib/postgresql/data
+
+volumes:
+   db:
+     driver: local

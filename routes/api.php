@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\BookController;
+use App\Http\Controllers\Api\PasteController;
 use App\Http\Controllers\Api\SearchController;
 
 /*
@@ -20,9 +20,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResources([
-    '/books' => BookController::class,
-]);
-
-Route::get('/search', [SearchController::class, 'search']);
-Route::get('/filter', [SearchController::class, 'filter']);
+//Route::apiResources([
+//    '/pastes' => PasteController::class,
+//]);
+//
+//Route::get('/search', [SearchController::class, 'search']);
+//Route::get('/filter', [SearchController::class, 'filter']);

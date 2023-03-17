@@ -2,20 +2,22 @@
 
 namespace Database\Factories;
 
-use App\Models\Book;
+use App\Models\Paste;
+use Exception;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class BookFactory extends Factory
+class PasteTestFactory extends Factory
 {
 
-    protected $model = Book::class;
+    protected $model = Paste::class;
 
     /**
      * Define the model's default state.
      *
      * @return array
+     * @throws Exception
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'title' => $this->faker->title(20),

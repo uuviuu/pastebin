@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Controllers;
 
-use App\Models\Book;
+use App\Models\Paste;
 use Tests\TestCase;
 
 /*
@@ -11,11 +11,11 @@ use Tests\TestCase;
 *  - создание, чтение, изменение и удаление одной книги
 */
 
-class BookControllerTest extends TestCase
+class PasteControllerTest extends TestCase
 {
     public function testIndex()
     {
-        $response = $this->get('/api/books');
+        $response = $this->get('/api/pastes');
         $response->assertStatus(200);
         echo "\n\t\tTest index status 200\n\n";
     }
@@ -23,7 +23,7 @@ class BookControllerTest extends TestCase
     {
         $response = $this->json(
             'POST',
-            '/api/books',
+            '/api/pastes',
             [
                 'title' => 'create_title',
                 'author' => 'create_author',
@@ -37,18 +37,18 @@ class BookControllerTest extends TestCase
     }
     public function testDetail()
     {
-        $last_book = Book::latest()->first()['id'];
-        $response = $this->get('/api/books/' . $last_book);
+        $last_paste = Paste::latest()->first()['id'];
+        $response = $this->get('/api/pastes/' . $last_paste);
         $response->assertStatus(200);
         echo "\n\t\tTest last detail status 200\n\n";
         dump($response->json());
     }
     public function testUpdate()
     {
-        $last_book = Book::latest()->first()['id'];
+        $last_paste = Paste::latest()->first()['id'];
         $response = $this->json(
             'PUT',
-            '/api/books/' . $last_book,
+            '/api/pastes/' . $last_paste,
             [
                 'title' => 'update_title',
                 'author' => 'update_author',
@@ -63,8 +63,8 @@ class BookControllerTest extends TestCase
     }
     public function testDelete()
     {
-        $last_book = Book::latest()->first()['id'];
-        $response = $this->delete('/api/books/' . $last_book);
+        $last_paste = Paste::latest()->first()['id'];
+        $response = $this->delete('/api/pastes/' . $last_paste);
         $response->assertStatus(204);
         echo "\n\t\tTest delete status 200, data delete\n\n";
     }

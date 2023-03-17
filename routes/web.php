@@ -16,3 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+//Route::group(['prefix' => 'pastes'], function () {
+//    Route::get('/', 'PasteController@pastes')->name('pastes.paginate');
+//    Route::post('/', 'PasteController@create')->name('pastes.create');
+//});
