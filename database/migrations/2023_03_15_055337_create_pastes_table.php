@@ -16,10 +16,10 @@ class CreatePastesTable extends Migration
         Schema::create('pastes', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('created_by_id');
-            $table->foreign('created_by_id')->references('id')->on('users');
+            $table->foreign('created_by_id')->references('id')->on('users')->cascadeOnDelete();
             $table->timestamp('expiration_time')->nullable();
             $table->string('access', 50);
-            $table->string('hash', 16)->unique();
+            $table->string('paste_hash', 16)->unique();
             $table->string('locale_lang', 10);
             $table->string('paste', 255);
             $table->softDeletes();

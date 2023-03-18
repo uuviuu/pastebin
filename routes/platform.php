@@ -2,16 +2,12 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\PasteController;
-use App\Orchid\Screens\Examples\ExampleCardsScreen;
-use App\Orchid\Screens\Examples\ExampleChartsScreen;
-use App\Orchid\Screens\Examples\ExampleFieldsAdvancedScreen;
 use App\Orchid\Screens\Examples\ExampleFieldsScreen;
 use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
-use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
-use App\Orchid\Screens\PasteScreen;
-use App\Orchid\Screens\PlatformScreen;
+use App\Orchid\Screens\Paste\PasteCreateScreen;
+use App\Orchid\Screens\Paste\PasteDetailScreen;
+use App\Orchid\Screens\Paste\PastePaginateScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
@@ -31,17 +27,9 @@ use Tabuna\Breadcrumbs\Trail;
 |
 */
 
-//Route::group(['prefix' => 'pastes'], function () {
-//    Route::get('/', 'PasteController@pastes')->name('platform.pastes');
-//    Route::post('/', 'PasteController@create')->name('platform.pastes.create');
-//});
-//Route::get('pastes.create', [PasteController::class, 'create'])->name('pastes.create');
-
-Route::screen('pastes', PasteScreen::class)->name('platform.pastes');
-
-// Main
-//Route::screen('pastes', PlatformScreen::class)
-//    ->name('platform.pastes');
+Route::screen('paste/{paste_hash}', PasteDetailScreen::class)->name('platform.paste.detail');
+Route::screen('pastes/create', PasteCreateScreen::class)->name('platform.pastes.create');
+Route::screen('pastes', PastePaginateScreen::class)->name('platform.pastes.paginate');
 
 // Platform > Profile
 Route::screen('profile', UserProfileScreen::class)
@@ -107,13 +95,13 @@ Route::screen('roles', RoleListScreen::class)
     });
 
 // Example...
-//Route::screen('example', ExampleScreen::class)
-//    ->name('platform.example')
-//    ->breadcrumbs(function (Trail $trail) {
-//        return $trail
-//            ->parent('platform.index')
-//            ->push('Example screen');
-//    });
+Route::screen('example', ExampleScreen::class)
+    ->name('platform.example')
+    ->breadcrumbs(function (Trail $trail) {
+        return $trail
+            ->parent('platform.index')
+            ->push('Example screen');
+    });
 
 Route::screen('example-fields', ExampleFieldsScreen::class)->name('platform.example.fields');
 Route::screen('example-layouts', ExampleLayoutsScreen::class)->name('platform.example.layouts');

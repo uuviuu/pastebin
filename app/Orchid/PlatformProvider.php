@@ -8,7 +8,6 @@ use Orchid\Platform\Dashboard;
 use Orchid\Platform\ItemPermission;
 use Orchid\Platform\OrchidServiceProvider;
 use Orchid\Screen\Actions\Menu;
-use Orchid\Support\Color;
 
 class PlatformProvider extends OrchidServiceProvider
 {
@@ -28,29 +27,25 @@ class PlatformProvider extends OrchidServiceProvider
     public function registerMainMenu(): array
     {
         return [
-            Menu::make('Basic Elements')
-                ->title('Form controls')
+            Menu::make('Создать пасту')
                 ->icon('note')
-                ->route('platform.pastes'),
+                ->route('platform.pastes.create'),
 
-            Menu::make('Text Editors')
+            Menu::make('Ваши пасты')
                 ->icon('list')
-                ->route('platform.pastes'),
+                ->route('platform.pastes.paginate'),
 
             Menu::make('API')
                 ->icon('code')
                 ->list([
                     Menu::make('Документация')->icon('bag')
-                        ->route('platform.pastes'),
-                    Menu::make('Эмуляция API')->icon('heart')
-                        ->route('platform.pastes')
+//                        ->route('platform.pastes'),
                 ]),
 
             Menu::make(__('Users'))
                 ->icon('user')
                 ->route('platform.systems.users')
-                ->permission('platform.systems.users')
-                ->title(__('Access rights')),
+                ->permission('platform.systems.users'),
 
             Menu::make(__('Roles'))
                 ->icon('lock')

@@ -2,9 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Enums\Access;
 use App\Models\Paste;
+use App\Models\User;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class PasteFactory extends Factory
 {
@@ -19,12 +22,14 @@ class PasteFactory extends Factory
      */
     public function definition(): array
     {
+        $access = Access::getValues();
         return [
-            'title' => $this->faker->title(20),
-            'author' => $this->faker->text(20),
-            'year_of_publication'  => random_int(2000, 2022),
-            'description'  => $this->faker->text(200),
-            'ISBN'  =>  $this->faker->unique()->text(20),
+            'created_by_id' => User::inRandomOrder()->first()->id,
+            'expiration_time' => null,
+            'access'  => $access[array_rand($access)],
+            'paste_hash'  => Str::random(),
+            'locale_lang'  =>  'ru',
+            'paste'  =>  $this->faker->text(20),
         ];
     }
 }

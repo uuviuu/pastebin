@@ -32,7 +32,7 @@ class PasteController extends PlatformScreen
 
     public function create(CreatePasteRequest $request): RedirectResponse
     {
-        log::info('', $request->toArray());
+//        log::info('', $request->toArray());
 //        throw new WhiteListRegisterIpNotFound($request->input('id'));
 //        if (Auth::user()) {
 //

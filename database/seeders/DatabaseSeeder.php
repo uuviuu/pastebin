@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Paste;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,6 +16,37 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Paste::factory(10)->create();
+        $roleAdmin = Role::create([
+            'slug' => 'admin',
+            'name' => 'admin',
+            'permissions'  => [
+                'platform' => 1,
+                'platform.systems.roles' => 1,
+                'platform.systems.users' => 1,
+                'platform.systems.attachment' => 1,
+            ]
+        ]);
+        $roleUser = Role::create([
+            'slug' => 'user',
+            'name' => 'user',
+            'permissions'  => [
+                'platform' => 1,
+                'platform.systems.roles' => 0,
+                'platform.systems.users' => 0,
+                'platform.systems.attachment' => 0,
+            ]
+        ]);
+        User::factory(3)->create();
+
+        $users = User::get();
+        foreach ($users as $user) {
+            if ($user->name == 'admin') {
+                $user->role()->attach($roleAdmin->id);
+            } else {
+                $user->role()->attach($roleUser->id);
+            }
+        }
+
+        Paste::factory(15)->create();
     }
 }

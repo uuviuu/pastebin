@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('paste/{paste_hash}', function () {
+    return view('paste');
+})->name('paste');
+
 //Route::group(['prefix' => 'pastes'], function () {
 //    Route::get('/', 'PasteController@pastes')->name('pastes.paginate');
 //    Route::post('/', 'PasteController@create')->name('pastes.create');

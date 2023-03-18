@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Orchid\Platform\Models\User as Authenticatable;
 
 /**
@@ -12,8 +12,6 @@ use Orchid\Platform\Models\User as Authenticatable;
  */
 class User extends Authenticatable
 {
-//    use SoftDeletes;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -74,13 +72,21 @@ class User extends Authenticatable
         'created_at',
     ];
 
-//    protected $dates = [
-//        'deleted_at',
-//    ];
+    protected $appends = ['role'];
+
+    public function getRoleAttribute()
+    {
+        return $this->role()->first();
+    }
 
     public function pastes(): HasMany
     {
         return $this->hasMany(Paste::class, 'created_by_id');
+    }
+
+    public function role(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class, 'role_users', 'user_id', 'role_id');
     }
 
     public function isBanned(): bool
