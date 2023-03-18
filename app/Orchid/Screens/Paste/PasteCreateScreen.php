@@ -30,6 +30,7 @@ class PasteCreateScreen extends Screen
                 $query->where('expiration_time', '>=', Carbon::now());
             })
             ->where('access', Access::PUBLIC)
+            ->orderBy('id', 'desc')
             ->defaultSort('created_at', 'desc')
             ->limit(10)
             ->get();

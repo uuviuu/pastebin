@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
                 'platform.systems.attachment' => 0,
             ]
         ]);
+        exec('php artisan orchid:admin admin admin@admin.com password');
         User::factory(3)->create();
 
         $users = User::get();

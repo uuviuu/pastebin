@@ -26,6 +26,7 @@ class PastePaginateScreen extends Screen
             ->orWhere(function ($query) {
                 $query->where('expiration_time', '>=', Carbon::now());
             })
+            ->orderBy('id', 'desc')
             ->defaultSort('created_at', 'desc')
             ->paginate(10);
 
