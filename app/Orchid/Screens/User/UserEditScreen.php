@@ -94,6 +94,16 @@ class UserEditScreen extends Screen
                 ->method('remove')
                 ->canSee($this->user->exists),
 
+            Button::make(__('Забанить'))
+                ->icon('eye')
+                ->method('ban')
+                ->canSee($this->user->exists  && $this->user->permissions['platform.index']),
+
+            Button::make(__('Разбанить'))
+                ->icon('eye')
+                ->method('ban')
+                ->canSee($this->user->exists  && !$this->user->permissions['platform.index']),
+
             Button::make(__('Save'))
                 ->icon('check')
                 ->method('save'),
@@ -213,6 +223,22 @@ class UserEditScreen extends Screen
         Toast::info(__('User was removed'));
 
         return redirect()->route('platform.systems.users');
+    }
+
+    /**
+     * @param User $user
+     *
+     * @throws \Exception
+     *
+     */
+    public function ban(User $user)
+    {
+        $permissions = $user->permissions;
+        $permissions['platform.index'] = !$permissions['platform.index'];
+
+        $user->permissions = $permissions;
+        $user->save();
+        Toast::info('Выполнено');
     }
 
     /**

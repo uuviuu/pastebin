@@ -62,6 +62,21 @@ class UserListLayout extends Table
                     return DropDown::make()
                         ->icon('options-vertical')
                         ->list([
+                            Button::make('Забанить')
+                                ->icon('eye')
+                                ->method('ban', [
+                                    'id' => $user->id,
+                                    'permission_index' => $user->permissions['platform.index'],
+                                ])
+                                ->canSee($user->exists  && $user->permissions['platform.index']),
+
+                            Button::make('Разбанить')
+                                ->icon('eye')
+                                ->method('ban', [
+                                    'id' => $user->id,
+                                    'permission_index' => $user->permissions['platform.index'],
+                                ])
+                                ->canSee($user->exists  && !$user->permissions['platform.index']),
 
                             Link::make(__('Edit'))
                                 ->route('platform.systems.users.edit', $user->id)

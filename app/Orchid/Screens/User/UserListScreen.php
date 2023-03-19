@@ -132,4 +132,18 @@ class UserListScreen extends Screen
 
         Toast::info(__('User was removed'));
     }
+
+    /**
+     * @param Request $request
+     */
+    public function ban(Request $request): void
+    {
+        $user = User::findOrFail($request->get('id'));
+        $permissions = $user->permissions;
+        $permissions['platform.index'] = !$request->get('permission_index');
+
+        $user->permissions = $permissions;
+        $user->save();
+        Toast::info('Выполнено');
+    }
 }
