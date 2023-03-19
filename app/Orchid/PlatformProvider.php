@@ -35,6 +35,11 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('list')
                 ->route('platform.pastes.paginate'),
 
+            Menu::make('Пасты с жалобой')
+                ->icon('list')
+                ->route('platform.pastes.withComplaint')
+                ->permission('platform.systems.roles'),
+
             Menu::make('API')
                 ->icon('code')
                 ->list([

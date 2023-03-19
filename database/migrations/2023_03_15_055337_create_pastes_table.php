@@ -15,13 +15,14 @@ class CreatePastesTable extends Migration
     {
         Schema::create('pastes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('created_by_id');
+            $table->unsignedInteger('created_by_id')->nullable();
             $table->foreign('created_by_id')->references('id')->on('users')->cascadeOnDelete();
             $table->timestamp('expiration_time')->nullable();
             $table->string('access', 50);
             $table->string('paste_hash', 16)->unique();
             $table->string('locale_lang', 10);
             $table->string('paste', 255);
+            $table->string('complaint_message', 255)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

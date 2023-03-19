@@ -30,7 +30,8 @@ class Paste extends Model
         'access',
         'paste_hash',
         'locale_lang',
-        'paste'
+        'paste',
+        'complaint_message',
     ];
 
     public $dates = [

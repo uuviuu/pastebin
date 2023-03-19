@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Alert;
 
@@ -44,7 +45,10 @@ class PasteCreateScreen extends Screen
      */
     public function commandBar(): iterable
     {
-        return [];
+        return [
+            Link::make('Вернуться на сайт')
+                ->route('pastes'),
+        ];
     }
 
     /**
@@ -87,6 +91,6 @@ class PasteCreateScreen extends Screen
             Alert::error('Ошибка! Повторите попытку.');
         }
 
-        return redirect()->back();
+        return redirect()->route('platform.paste.detail', $paste);
     }
 }

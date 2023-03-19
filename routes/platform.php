@@ -8,6 +8,7 @@ use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Paste\PasteCreateScreen;
 use App\Orchid\Screens\Paste\PasteDetailScreen;
 use App\Orchid\Screens\Paste\PastePaginateScreen;
+use App\Orchid\Screens\Paste\PasteWithComplaintScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
@@ -27,9 +28,10 @@ use Tabuna\Breadcrumbs\Trail;
 |
 */
 
-Route::screen('paste/{paste_hash}', PasteDetailScreen::class)->name('platform.paste.detail');
+Route::screen('pastes/detail/{paste_hash}', PasteDetailScreen::class)->name('platform.paste.detail');
 Route::screen('pastes/create', PasteCreateScreen::class)->name('platform.pastes.create');
 Route::screen('pastes', PastePaginateScreen::class)->name('platform.pastes.paginate');
+Route::screen('pastes/withComplaint', PasteWithComplaintScreen::class)->name('platform.pastes.withComplaint');
 
 // Platform > Profile
 Route::screen('profile', UserProfileScreen::class)

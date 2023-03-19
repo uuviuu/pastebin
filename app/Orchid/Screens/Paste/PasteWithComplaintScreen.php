@@ -3,15 +3,14 @@
 namespace App\Orchid\Screens\Paste;
 
 use App\Models\Paste;
-use App\Orchid\Layouts\Paste\PastePaginateLayout;
+use App\Orchid\Layouts\Paste\PasteWithComplaintLayout;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Toast;
 
-class PastePaginateScreen extends Screen
+class PasteWithComplaintScreen extends Screen
 {
     /**
      * Query data.
@@ -20,8 +19,7 @@ class PastePaginateScreen extends Screen
      */
     public function query(): iterable
     {
-        $pastes = Auth::user()
-            ->pastes()
+        $pastes = Paste::whereNotNull('complaint_message')
             ->where(function ($query) {
                 $query->whereNull('expiration_time')
                     ->orWhere('expiration_time', '>=', Carbon::now());
@@ -31,7 +29,7 @@ class PastePaginateScreen extends Screen
             ->paginate(10);
 
         return [
-            'pastePaginate'  => $pastes,
+            'pasteWithComplaint'  => $pastes,
         ];
     }
 
@@ -69,7 +67,7 @@ class PastePaginateScreen extends Screen
     public function layout(): iterable
     {
         return [
-            PastePaginateLayout::class,
+            PasteWithComplaintLayout::class,
         ];
     }
 

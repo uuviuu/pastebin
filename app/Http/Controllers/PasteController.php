@@ -19,7 +19,6 @@ class PasteController extends Controller
             'access' => Access::getValues(),
             'expirationTime' => ExpirationTime::getValues(),
             'lastPastes' => PasteService::lastPastes(),
-            'isAuth' => (bool)Auth::user(),
         ]);
     }
 
@@ -27,12 +26,12 @@ class PasteController extends Controller
     {
         if ($paste->access == Access::PRIVATE) {
             $authUserId = Auth::user()['id'] ?? null;
-            if ($authUserId != $paste->id)
-                return redirect()->back();
+            if (!$authUserId || $authUserId != $paste->created_by_id)
+                return redirect()->route('pastes');
         }
+
         return view('paste_detail', [
             'paste' => $paste,
-            'isAuth' => (bool)Auth::user(),
         ]);
     }
 
@@ -48,8 +47,8 @@ class PasteController extends Controller
 
         $expirationTime = $request->input('expirationTime') == ExpirationTime::INFINITELY ? null : $request->input('expirationTime');
 
-        PasteService::create($data, $expirationTime);
+        $paste = PasteService::create($data, $expirationTime);
 
-        return redirect()->back();
+        return redirect()->route('pastes.detail', $paste);
     }
 }
