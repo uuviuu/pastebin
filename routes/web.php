@@ -17,5 +17,5 @@ Route::get('/', 'PasteController@pastes')->name('pastes');
 Route::get('/{paste}', 'PasteController@detail')->name('pastes.detail');
 Route::post('/', 'PasteController@create')->name('pastes.create');
 
-Route::any('/logout', 'UserController@logout')->name('logout');
+Route::post('/logout', 'UserController@logout')->name('logout');
 

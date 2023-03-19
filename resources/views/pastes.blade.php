@@ -20,21 +20,8 @@
                 <a href="{{ route('pastes') }}" class="btn btn-primary"> На главную </a>
                 @auth
                     <a href="{{ route('platform.pastes.create') }}" class="btn btn-primary">В панель пользователя</a>
-                    <a href="{{ route('logout') }}"
-                       class="btn btn-danger"
-                       data-controller="form"
-                       data-action="form#submitByForm"
-                       data-form-id="logout-form"
-                       dusk="logout-button">
-                        <x-orchid-icon path="logout" class="me-2"/>Выйти</a>
-                    <form id="logout-form"
-                          class="hidden"
-                          action="{{ route('logout') }}"
-                          method="POST"
-                          data-controller="form"
-                          data-action="form#submit"
-                    >
-                        @csrf
+                    <form class="hidden" action="{{ route('logout') }}" method="POST">
+                        @csrf <button type="submit" class=" mt-1 btn btn-danger"> Выход</button>
                     </form>
                 @else
                     <a href="{{ route('platform.login') }}" class="btn btn-primary"> Авторизация </a>
@@ -54,7 +41,8 @@
                         </div>
                         <div class="form-group">
                             <label> Язык* </label>
-                            <input type="text" class="form-control" required name="locale" id="locale" placeholder="Введите язык">
+                            <input type="text" class="form-control" required name="locale" id="locale"
+                                   placeholder="Введите язык">
                         </div>
                         <label> Доступность* </label>
                         <select class="custom-select mr-sm-2" required id="access" name="access">
