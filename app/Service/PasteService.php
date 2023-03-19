@@ -46,4 +46,17 @@ class PasteService
         return $stringTime == ExpirationTime::INFINITELY ? null
             : Carbon::now()->add(trans('timeIntervals.' . $addTime[1]), $addTime[0]);
     }
+
+    public static function checkDetail($paste, $userId)
+    {
+        if ($paste->expiration_time < Carbon::now() && $paste->expiration_time != null) {
+            abort(404);
+        }
+
+        if ($paste->access == Access::PRIVATE) {
+            if (!$userId || $userId != $paste->created_by_id) {
+                abort(404);
+            }
+        }
+    }
 }

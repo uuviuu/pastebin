@@ -2,8 +2,8 @@
 
 namespace App\Orchid\Screens\Paste;
 
-use App\Enums\Access;
 use App\Models\Paste;
+use App\Service\PasteService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Orchid\Screen\Actions\Link;
@@ -24,12 +24,6 @@ class PasteDetailScreen extends Screen
      */
     public function query(Paste $paste): iterable
     {
-        if ($paste->access == Access::PRIVATE) {
-            $authUserId = Auth::user()['id'] ?? null;
-            if (!$authUserId || $authUserId != $paste->created_by_id) {
-                exit();
-            }
-        }
         $this->paste = $paste;
 
         return [];
@@ -72,6 +66,8 @@ class PasteDetailScreen extends Screen
      */
     public function layout(): iterable
     {
+        PasteService::checkDetail($this->paste, Auth::user()['id'] ?? null);
+
         return [
             Layout::rows([
                 TextArea::make('paste')

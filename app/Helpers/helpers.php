@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Responses\ApiJsonResponse;
+use Illuminate\Contracts\Support\Arrayable;
 
 if (!function_exists('apiResponse')) {
     function apiResponse()
@@ -21,9 +22,17 @@ if (!function_exists('translateToCamelCase')) {
 }
 
 if (!function_exists('translateJsonCase')) {
-    function translateJsonCase($jsonData, callable $transformFunction): array
+    /**
+     * Transforms all keys in json object with transform function
+     * Values are returned as is
+     *
+     * @param $jsonData
+     * @param callable $transformFunction
+     * @return array
+     */
+    function translateJsonCase($jsonData, callable $transformFunction)
     {
-        if ($jsonData) {
+        if ($jsonData instanceof Arrayable) {
             $jsonData = $jsonData->toArray();
         }
         if (is_array($jsonData)) {
@@ -31,7 +40,7 @@ if (!function_exists('translateJsonCase')) {
             foreach ($jsonData as $key => $value) {
                 $key = $transformFunction($key);
 
-                if ($value || is_array($value)) {
+                if ($value instanceof Arrayable || is_array($value)) {
                     $res[$key] = translateJsonCase($value, $transformFunction);
                 } else {
                     $res[$key] = $value;

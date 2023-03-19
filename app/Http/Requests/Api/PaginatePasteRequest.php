@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Api;
 
-class PaginatePasteRequest extends Request
+use Illuminate\Foundation\Http\FormRequest;
+
+class PaginatePasteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +24,9 @@ class PaginatePasteRequest extends Request
     public function rules(): array
     {
         return [
-            "title" => "string|nullable",
-            "author" => "string|nullable",
-            'search' => 'string|min:1|max:255',
+            'api_token' => 'required|string',
             'page' => 'integer|min:1',
-            'pageCapacity' => 'required|in:5,10,15',
+            'pageCapacity' => 'integer|in:5,10,15',
         ];
     }
 }

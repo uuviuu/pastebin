@@ -24,11 +24,7 @@ class PasteController extends Controller
 
     public function detail(Paste $paste)
     {
-        if ($paste->access == Access::PRIVATE) {
-            $authUserId = Auth::user()['id'] ?? null;
-            if (!$authUserId || $authUserId != $paste->created_by_id)
-                return redirect()->route('pastes');
-        }
+        PasteService::checkDetail($paste, Auth::user()['id'] ?? null);
 
         return view('paste_detail', [
             'paste' => $paste,

@@ -22,7 +22,6 @@ class User extends Authenticatable
         'email',
         'password',
         'permissions',
-        'is_banned',
     ];
 
     /**
@@ -32,6 +31,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
+        'api_token',
         'remember_token',
         'permissions',
         'deleted_at',
