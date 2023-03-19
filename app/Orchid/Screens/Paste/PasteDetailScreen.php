@@ -4,7 +4,7 @@ namespace App\Orchid\Screens\Paste;
 
 use App\Models\Paste;
 use Orchid\Screen\Actions\Link;
-use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\TextArea;
 use Orchid\Support\Facades\Layout;
 use Orchid\Screen\Screen;
 
@@ -56,11 +56,14 @@ class PasteDetailScreen extends Screen
     {
         return [
             Layout::rows([
-                Input::make('paste')
-                    ->type('text')
-                    ->readonly()
+                TextArea::make('paste')
                     ->title('Паста')
-                    ->placeholder($this->paste->paste),
+                    ->placeholder($this->paste->paste)
+                    ->value($this->paste->paste),
+                TextArea::make('paste')
+                    ->title('Паста')
+                    ->placeholder(route('pastes.detail', $this->paste->paste_hash))
+                    ->value(route('pastes.detail', $this->paste->paste_hash)),
             ])
         ];
     }

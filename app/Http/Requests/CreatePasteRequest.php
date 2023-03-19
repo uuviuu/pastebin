@@ -6,7 +6,7 @@ use App\Enums\Access;
 use App\Enums\ExpirationTime;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreatePasteRequest extends Request
+class CreatePasteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

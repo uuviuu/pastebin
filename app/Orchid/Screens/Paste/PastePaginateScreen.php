@@ -22,9 +22,9 @@ class PastePaginateScreen extends Screen
     {
         $pastes = Auth::user()
             ->pastes()
-            ->whereNull('expiration_time')
-            ->orWhere(function ($query) {
-                $query->where('expiration_time', '>=', Carbon::now());
+            ->where(function ($query) {
+                $query->whereNull('expiration_time')
+                    ->orWhere('expiration_time', '>=', Carbon::now());
             })
             ->orderBy('id', 'desc')
             ->defaultSort('created_at', 'desc')

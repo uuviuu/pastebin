@@ -39,7 +39,7 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('code')
                 ->list([
                     Menu::make('Документация')->icon('bag')
-//                        ->route('platform.pastes'),
+//                        ->route('platform.pastes.api'),
                 ]),
 
             Menu::make(__('Users'))

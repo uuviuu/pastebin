@@ -2,13 +2,10 @@
 
 namespace App\Orchid\Screens\Paste;
 
-use App\Enums\Access;
 use App\Http\Requests\CreatePasteRequest;
-use App\Models\Paste;
 use App\Orchid\Layouts\Paste\PasteCreateLayout;
 use App\Orchid\Layouts\Paste\PasteListLayout;
 use App\Service\PasteService;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -25,18 +22,8 @@ class PasteCreateScreen extends Screen
      */
     public function query(): iterable
     {
-        $pastes = Paste::whereNull('expiration_time')
-            ->orWhere(function ($query) {
-                $query->where('expiration_time', '>=', Carbon::now());
-            })
-            ->where('access', Access::PUBLIC)
-            ->orderBy('id', 'desc')
-            ->defaultSort('created_at', 'desc')
-            ->limit(10)
-            ->get();
-
         return [
-            'pasteList'  => $pastes,
+            'pasteList'  => PasteService::lastPastes(),
         ];
     }
 
