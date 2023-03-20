@@ -25,6 +25,7 @@
                     </form>
                 @else
                     <a href="{{ route('platform.login') }}" class="btn btn-primary"> Авторизация </a>
+                    <a href="{{ route('users.registration') }}" class="btn btn-primary"> Регистрация </a>
                 @endauth
             </div>
             <div class="card shadow">

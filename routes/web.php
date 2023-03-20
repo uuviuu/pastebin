@@ -17,5 +17,10 @@ Route::get('/', 'PasteController@pastes')->name('pastes');
 Route::get('/{paste}', 'PasteController@detail')->name('pastes.detail');
 Route::post('/', 'PasteController@create')->name('pastes.create');
 
+Route::group(['prefix' => 'users'], function () {
+    Route::get('/registration', 'UserController@registration')->name('users.registration');
+    Route::post('/registration', 'UserController@createUser')->name('users.create');
+});
+
 Route::post('/logout', 'UserController@logout')->name('logout');
 

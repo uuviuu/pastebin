@@ -25,6 +25,7 @@
                     </form>
                 @else
                     <a href="{{ route('platform.login') }}" class="btn btn-primary"> Авторизация </a>
+                    <a href="{{ route('users.registration') }}" class="btn btn-primary"> Регистрация </a>
                 @endauth
             </div>
             <form action="{{ route('pastes.create') }}" method="POST">
@@ -38,6 +39,9 @@
                             <label> Паста* </label>
                             <textarea class="form-control" required name="paste" id="paste"
                                       placeholder="Введите пасту"></textarea>
+                            @error('paste')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label> Язык* </label>
