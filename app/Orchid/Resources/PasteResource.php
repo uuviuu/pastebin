@@ -51,8 +51,8 @@ class PasteResource extends Resource
                 return $model->paste;
                 }),
 
-            TD::make('locale_lang')->render(function ($model) {
-                return $model->locale_lang;
+            TD::make('lang')->render(function ($model) {
+                return $model->lang;
                 }),
 
             TD::make('created_at', 'Date of creation')

@@ -42,7 +42,7 @@ class PasteController extends Controller
         $data = [
             'created_by_id' => Auth::user()['id'] ?? null,
             'paste' => $request->input('paste'),
-            'locale_lang' => $request->input('locale'),
+            'lang' => $request->input('locale'),
             'paste_hash' => Str::random(),
             'access' => $request->input('access'),
         ];

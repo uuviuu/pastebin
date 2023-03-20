@@ -93,7 +93,7 @@
                             <td><a href="{{ route('pastes.detail', $paste->paste_hash) }}"
                                    class="badge badge-light">{{ $paste->paste_hash }}</a></td>
                             <td>{{ $paste->paste }}</td>
-                            <td>{{ $paste->locale_lang }}</td>
+                            <td>{{ $paste->lang }}</td>
                             <td>{{ $paste->access }}</td>
                             <td>{{ $paste->expiration_time ?? 'Неограниченно' }}</td>
                             <td>{{ $paste->created_at }}</td>

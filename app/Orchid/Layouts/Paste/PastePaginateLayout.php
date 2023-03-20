@@ -42,7 +42,7 @@ class PastePaginateLayout extends Table
                 }),
             TD::make('locale', 'Язык')
                 ->render(function (Paste $paste) {
-                    return Str::limit($paste->locale_lang, 200);
+                    return Str::limit($paste->lang, 200);
                 }),
             TD::make('access', 'Доступность')
                 ->render(function (Paste $paste) {

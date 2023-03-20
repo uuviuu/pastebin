@@ -8,6 +8,7 @@ use App\Http\Requests\Api\PaginatePasteRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreatePasteRequest;
 use App\Models\Paste;
+use App\Models\User;
 use App\Service\PasteService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -23,12 +24,12 @@ class ApiPasteController extends Controller
      */
     public function paginate(PaginatePasteRequest $request)
     {
-        if (!Auth::user()) {
+        $user = Auth::user() ?? User::where('api_token', $request->get('api_token'))->first();
+        if (!$user) {
             throw new UserNotFoundException();
         }
 
-        $pastes = Auth::user()
-            ->pastes()
+        $pastes = $user->pastes()
             ->where(function ($query) {
                 $query->whereNull('expiration_time')
                     ->orWhere('expiration_time', '>=', Carbon::now());
@@ -40,8 +41,15 @@ class ApiPasteController extends Controller
         return apiResponse()->success($pastes);
     }
 
-    public function detail(Paste $paste)
+    public function detail(Request $request)
     {
+        $this->validate($request, [
+            'api_token' => 'required|string|max:80',
+            'pasteHash' => 'required|string|max:16',
+        ]);
+
+        $paste = Paste::findOrFail($request->get('pasteHash'));
+
         PasteService::checkDetail($paste, Auth::user()['id'] ?? null);
 
         return apiResponse()->success($paste);
@@ -52,7 +60,7 @@ class ApiPasteController extends Controller
         $data = [
             'created_by_id' => Auth::user()['id'] ?? null,
             'paste' => $request->input('paste'),
-            'locale_lang' => $request->input('locale'),
+            'lang' => $request->input('locale'),
             'paste_hash' => Str::random(),
             'access' => $request->input('access'),
         ];

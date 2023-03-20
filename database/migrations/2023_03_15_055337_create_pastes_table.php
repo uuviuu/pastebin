@@ -20,7 +20,7 @@ class CreatePastesTable extends Migration
             $table->timestamp('expiration_time')->nullable();
             $table->string('access', 50);
             $table->string('paste_hash', 16)->unique();
-            $table->string('locale_lang', 10);
+            $table->string('lang', 10);
             $table->string('paste', 255);
             $table->string('complaint_message', 255)->nullable();
             $table->softDeletes();

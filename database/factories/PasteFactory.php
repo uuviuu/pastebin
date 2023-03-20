@@ -28,7 +28,7 @@ class PasteFactory extends Factory
             'expiration_time' => null,
             'access'  => $access[array_rand($access)],
             'paste_hash'  => Str::random(),
-            'locale_lang'  =>  'ru',
+            'lang'  =>  'php',
             'paste'  =>  $this->faker->text(20),
         ];
     }

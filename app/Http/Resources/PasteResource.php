@@ -18,7 +18,7 @@ class PasteResource extends JsonResource
         return [
             'created_by_id' => $this->created_by_id,
             'paste' => $this->paste,
-            'locale_lang' => $this->locale_lang,
+            'lang' => $this->lang,
             'access' => $this->access,
             'hash' => $this->hash,
             'expiration_time' => $this->expiration_time,

@@ -25,7 +25,6 @@ class ApiUserController extends Controller
             'pageCapacity' => 'integer|in:10,25,50',
         ]);
 
-        log::info(Auth::user());
         if (!Auth::user()->isAdmin()) {
             throw new UserNotFoundException();
         }

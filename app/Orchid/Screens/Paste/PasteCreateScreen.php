@@ -74,7 +74,7 @@ class PasteCreateScreen extends Screen
         $data = [
             'created_by_id' => Auth::user()['id'],
             'paste' => $request->get('paste'),
-            'locale_lang' => $request->get('locale'),
+            'lang' => $request->get('locale'),
             'paste_hash' => Str::random(),
             'access' => $request->get('access'),
         ];

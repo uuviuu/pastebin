@@ -29,7 +29,7 @@ class Paste extends Model
         'expiration_time',
         'access',
         'paste_hash',
-        'locale_lang',
+        'lang',
         'paste',
         'complaint_message',
     ];
