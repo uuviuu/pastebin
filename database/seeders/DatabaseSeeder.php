@@ -6,6 +6,7 @@ use App\Models\Paste;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -43,6 +44,9 @@ class DatabaseSeeder extends Seeder
         foreach ($users as $user) {
             if ($user->name == 'admin') {
                 $user->role()->attach($roleAdmin->id);
+
+                $user->api_token = Str::random(80);
+                $user->save();
             } else {
                 $user->role()->attach($roleUser->id);
             }
