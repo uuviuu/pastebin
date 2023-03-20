@@ -21,5 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['namespace' => 'Api', 'middleware' => 'auth:api'], function () {
     Route::get('/pastes', 'ApiPasteController@paginate')->name('api.pastes');
     Route::get('/pastes/detail/{paste}', 'ApiPasteController@detail')->name('api.pastes.detail');
-    Route::post('/pastes', 'ApiPasteController@create')->name('api.pastes.create');
+    Route::post('/pastes/create', 'ApiPasteController@create')->name('api.pastes.create');
+    Route::post('/pastes/remove', 'ApiPasteController@remove')->name('api.pastes.create');
+    Route::post('/pastes/complaint', 'ApiPasteController@complaint')->name('api.pastes.create');
+
+    Route::get('/users', 'ApiUserController@paginate')->name('api.users');
+    Route::post('/users/ban', 'ApiUserController@ban')->name('api.users.ban');
 });

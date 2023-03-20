@@ -15,8 +15,14 @@ class PasteController extends Controller
 {
     public function pastes()
     {
+        $access = Access::getValues();
+
+        if (!Auth::user()) {
+            $access = array_diff($access, [Access::PRIVATE]);
+        }
+
         return view('pastes', [
-            'access' => Access::getValues(),
+            'access' => $access,
             'expirationTime' => ExpirationTime::getValues(),
             'lastPastes' => PasteService::lastPastes(),
         ]);

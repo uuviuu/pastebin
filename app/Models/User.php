@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Log;
 use Orchid\Platform\Models\User as Authenticatable;
 
 /**
@@ -76,7 +77,7 @@ class User extends Authenticatable
 
     public function getRoleAttribute()
     {
-        return $this->role()->first();
+        return $this->role()->first()->name;
     }
 
     public function pastes(): HasMany
@@ -103,5 +104,4 @@ class User extends Authenticatable
     {
         return $this->role == 'client';
     }
-//    api_token = str_random(60);
 }

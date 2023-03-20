@@ -83,7 +83,7 @@ class PasteDetailScreen extends Screen
                 Input::make('complaint')
                     ->title('Напишите жалобу')
                     ->required(),
-                Input::make('hash')
+                Input::make('pasteHash')
                     ->value($this->paste->paste_hash)
                     ->hidden(),
             ]))->title('Напишите жалобу'),
@@ -95,9 +95,7 @@ class PasteDetailScreen extends Screen
      */
     public function complaint(Request $request): void
     {
-        $paste = Paste::findOrFail($request->get('hash'));
-        $paste->complaint_message = $request->get('complaint');
-        $paste->save();
+        PasteService::complaint($request->get('pasteHash'), $request->get('complaint'));
 
         Toast::info('Жалоба успешно отправлена');
     }

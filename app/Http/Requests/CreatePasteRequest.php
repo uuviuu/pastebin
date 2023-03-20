@@ -26,6 +26,7 @@ class CreatePasteRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'api_token' => 'string|max:80',
             'paste' => 'required|string|max:255',
             'access' => 'required|string|in:'
                 . implode(',', Access::getValues()),

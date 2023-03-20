@@ -39,6 +39,15 @@ class PasteService
         return $paste;
     }
 
+    public static function complaint($pasteHash, $complaint)
+    {
+        $paste = Paste::findOrFail($pasteHash);
+        $paste->complaint_message = $complaint;
+        $paste->save();
+
+        return $paste;
+    }
+
     public static function expirationTime($stringTime): ?Carbon
     {
         $addTime = explode(' ', $stringTime);

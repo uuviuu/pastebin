@@ -78,7 +78,7 @@ class PastePaginateScreen extends Screen
      */
     public function remove(Request $request)
     {
-        Paste::findOrFail($request->get('paste_hash'))->delete();
+        Paste::findOrFail($request->get('pasteHash'))->delete();
         Toast::info('Паста успешно удалена');
     }
 }

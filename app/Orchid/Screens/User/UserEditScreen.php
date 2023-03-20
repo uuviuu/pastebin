@@ -8,6 +8,7 @@ use App\Orchid\Layouts\Role\RolePermissionLayout;
 use App\Orchid\Layouts\User\UserEditLayout;
 use App\Orchid\Layouts\User\UserPasswordLayout;
 use App\Orchid\Layouts\User\UserRoleLayout;
+use App\Service\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -233,11 +234,8 @@ class UserEditScreen extends Screen
      */
     public function ban(User $user)
     {
-        $permissions = $user->permissions;
-        $permissions['platform.index'] = !$permissions['platform.index'];
+        UserService::ban($user);
 
-        $user->permissions = $permissions;
-        $user->save();
         Toast::info('Выполнено');
     }
 

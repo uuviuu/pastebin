@@ -66,7 +66,7 @@ class UserListLayout extends Table
                                 ->icon('eye')
                                 ->method('ban', [
                                     'id' => $user->id,
-                                    'permission_index' => $user->permissions['platform.index'],
+                                    'permissionIndex' => $user->permissions['platform.index'],
                                 ])
                                 ->canSee($user->exists  && $user->permissions['platform.index']),
 
@@ -74,7 +74,7 @@ class UserListLayout extends Table
                                 ->icon('eye')
                                 ->method('ban', [
                                     'id' => $user->id,
-                                    'permission_index' => $user->permissions['platform.index'],
+                                    'permissionIndex' => $user->permissions['platform.index'],
                                 ])
                                 ->canSee($user->exists  && !$user->permissions['platform.index']),
 

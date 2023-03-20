@@ -7,6 +7,7 @@ namespace App\Orchid\Screens\User;
 use App\Orchid\Layouts\User\UserEditLayout;
 use App\Orchid\Layouts\User\UserFiltersLayout;
 use App\Orchid\Layouts\User\UserListLayout;
+use App\Service\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Orchid\Platform\Models\User;
@@ -139,11 +140,8 @@ class UserListScreen extends Screen
     public function ban(Request $request): void
     {
         $user = User::findOrFail($request->get('id'));
-        $permissions = $user->permissions;
-        $permissions['platform.index'] = !$request->get('permission_index');
+        UserService::ban($user);
 
-        $user->permissions = $permissions;
-        $user->save();
         Toast::info('Выполнено');
     }
 }

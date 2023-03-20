@@ -24,9 +24,9 @@ class PaginatePasteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'api_token' => 'required|string',
+            'api_token' => 'required|string|max:80',
             'page' => 'integer|min:1',
-            'pageCapacity' => 'integer|in:5,10,15',
+            'pageCapacity' => 'integer|in:10,25,50',
         ];
     }
 }
