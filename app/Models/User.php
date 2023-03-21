@@ -75,9 +75,9 @@ class User extends Authenticatable
 
     protected $appends = ['role'];
 
-    public function getRoleAttribute()
+    public function getRoleAttribute(): string
     {
-        return $this->role()->first()->name;
+        return $this->role()->first()->name ?? 'user';
     }
 
     public function pastes(): HasMany

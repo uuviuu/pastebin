@@ -18,9 +18,12 @@ Route::get('/{paste}', 'PasteController@detail')->name('pastes.detail');
 Route::post('/', 'PasteController@create')->name('pastes.create');
 
 Route::group(['prefix' => 'users'], function () {
-    Route::get('/registration', 'UserController@registration')->name('users.registration');
-    Route::post('/registration', 'UserController@createUser')->name('users.create');
+    Route::get('/registration', 'User\LoginController@registration')->name('users.registration');
+    Route::post('/registration', 'User\LoginController@createUser')->name('users.create');
 });
 
-Route::post('/logout', 'UserController@logout')->name('logout');
+Route::post('/logout', 'User\UserController@logout')->name('logout');
+
+Route::get('/auth/{provider}', 'User\LoginController@redirectToProvider')->name('auth.social');
+Route::get('/auth/{provider}/callback', 'User\LoginController@handleProviderCallback')->name('auth.social.callback');
 
