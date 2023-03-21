@@ -22,7 +22,7 @@ class PasteDetailScreen extends Screen
      *
      * @return array
      */
-    public function query(Paste $paste): iterable
+    public function query(Paste $paste): array
     {
         $this->paste = $paste;
 
@@ -42,9 +42,9 @@ class PasteDetailScreen extends Screen
     /**
      * Button commands.
      *
-     * @return \Orchid\Screen\Action[]
+     * @return array
      */
-    public function commandBar(): iterable
+    public function commandBar(): array
     {
         return [
             Link::make('Посмотреть на сайте')
@@ -65,9 +65,9 @@ class PasteDetailScreen extends Screen
     /**
      * Views.
      *
-     * @return \Orchid\Screen\Layout[]|string[]
+     * @return array
      */
-    public function layout(): iterable
+    public function layout(): array
     {
         PasteService::checkDetail($this->paste, Auth::user()['id'] ?? null);
 
@@ -100,6 +100,7 @@ class PasteDetailScreen extends Screen
 
     /**
      * @param Request $request
+     * @return void
      */
     public function complaint(Request $request): void
     {

@@ -6,10 +6,11 @@ namespace App\Orchid\Screens\Role;
 
 use App\Orchid\Layouts\Role\RoleEditLayout;
 use App\Orchid\Layouts\Role\RolePermissionLayout;
+use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Orchid\Platform\Models\Role;
-use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Layout;
@@ -29,7 +30,7 @@ class RoleEditScreen extends Screen
      *
      * @return array
      */
-    public function query(Role $role): iterable
+    public function query(Role $role): array
     {
         return [
             'role'       => $role,
@@ -40,9 +41,9 @@ class RoleEditScreen extends Screen
     /**
      * Display header name.
      *
-     * @return string|null
+     * @return string
      */
-    public function name(): ?string
+    public function name(): string
     {
         return 'Manage roles';
     }
@@ -50,17 +51,17 @@ class RoleEditScreen extends Screen
     /**
      * Display header description.
      *
-     * @return string|null
+     * @return string
      */
-    public function description(): ?string
+    public function description(): string
     {
         return 'Access rights';
     }
 
     /**
-     * @return iterable|null
+     * @return iterable
      */
-    public function permission(): ?iterable
+    public function permission(): iterable
     {
         return [
             'platform.systems.roles',
@@ -70,9 +71,9 @@ class RoleEditScreen extends Screen
     /**
      * Button commands.
      *
-     * @return Action[]
+     * @return array
      */
-    public function commandBar(): iterable
+    public function commandBar(): array
     {
         return [
             Button::make(__('Save'))
@@ -89,9 +90,9 @@ class RoleEditScreen extends Screen
     /**
      * Views.
      *
-     * @return string[]|\Orchid\Screen\Layout[]
+     * @return array
      */
-    public function layout(): iterable
+    public function layout(): array
     {
         return [
             Layout::block([
@@ -111,10 +112,9 @@ class RoleEditScreen extends Screen
     /**
      * @param Request $request
      * @param Role    $role
-     *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function save(Request $request, Role $role)
+    public function save(Request $request, Role $role): RedirectResponse
     {
         $request->validate([
             'role.slug' => [
@@ -141,12 +141,10 @@ class RoleEditScreen extends Screen
 
     /**
      * @param Role $role
-     *
-     * @throws \Exception
-     *
-     * @return \Illuminate\Http\RedirectResponse
+     * @throws Exception
+     * @return RedirectResponse
      */
-    public function remove(Role $role)
+    public function remove(Role $role): RedirectResponse
     {
         $role->delete();
 

@@ -11,7 +11,11 @@ class ApiJsonResponse
 {
     protected $statusCode;
 
-    public function success($data = ''): JsonResponse
+    /**
+     * @param string $data
+     * @return JsonResponse
+     */
+    public function success(string $data = ''): JsonResponse
     {
         $responseJsonData = [
             'status' => 'success',
@@ -23,7 +27,14 @@ class ApiJsonResponse
         return response()->json(translateToCamelCase($responseJsonData), $this->statusCode);
     }
 
-    public function error(string $message = '', $code = null, $exception = null, $info = []): JsonResponse
+    /**
+     * @param string $message
+     * @param $code
+     * @param $exception
+     * @param array $info
+     * @return JsonResponse
+     */
+    public function error(string $message = '', $code = null, $exception = null, array $info = []): JsonResponse
     {
         $headers = [];
         $responseJsonData = [

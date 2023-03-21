@@ -14,7 +14,6 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use OpenApi\Annotations as OA;
 
@@ -129,13 +128,7 @@ class ApiPasteController extends Controller
      */
     public function create(CreatePasteRequest $request): JsonResponse
     {
-        $data = [
-            'created_by_id' => Auth::user()['id'] ?? null,
-            'paste' => nl2br($request->input('paste')),
-            'lang' => $request->input('lang'),
-            'paste_hash' => Str::random(),
-            'access' => $request->input('access'),
-        ];
+        $data = PasteService::createData($request, Auth::user()['id'] ?? null);
 
         $expirationTime = $request->input('expirationTime') == ExpirationTime::INFINITELY ? null : $request->input('expirationTime');
 

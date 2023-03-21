@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\Log;
 use Orchid\Platform\Models\User as Authenticatable;
 
 /**
  * @property boolean $is_banned
  * @property string $role
+ * @property array $permissions
  */
 class User extends Authenticatable
 {
@@ -73,13 +73,22 @@ class User extends Authenticatable
         'created_at',
     ];
 
+    /**
+     * @var string[]
+     */
     protected $appends = ['role'];
 
+    /**
+     * @return string
+     */
     public function getRoleAttribute(): string
     {
         return $this->role()->first()->name ?? 'user';
     }
 
+    /**
+     * @return HasMany
+     */
     public function pastes(): HasMany
     {
         return $this->hasMany(Paste::class, 'created_by_id');
@@ -90,16 +99,25 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class, 'role_users', 'user_id', 'role_id');
     }
 
+    /**
+     * @return bool
+     */
     public function isBanned(): bool
     {
         return $this->is_banned;
     }
 
+    /**
+     * @return bool
+     */
     public function isAdmin(): bool
     {
         return $this->role == 'admin';
     }
 
+    /**
+     * @return bool
+     */
     public function isClient(): bool
     {
         return $this->role == 'client';

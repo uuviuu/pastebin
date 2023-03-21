@@ -21,7 +21,7 @@ class PasteCreateScreen extends Screen
      *
      * @return array
      */
-    public function query(): iterable
+    public function query(): array
     {
         return [
             'pasteList'  => PasteService::lastPastes(),
@@ -31,9 +31,9 @@ class PasteCreateScreen extends Screen
     /**
      * Display header name.
      *
-     * @return string|null
+     * @return string
      */
-    public function name(): ?string
+    public function name(): string
     {
         return 'Создайте пасту';
     }
@@ -41,9 +41,9 @@ class PasteCreateScreen extends Screen
     /**
      * Button commands.
      *
-     * @return \Orchid\Screen\Action[]
+     * @return array
      */
-    public function commandBar(): iterable
+    public function commandBar(): array
     {
         return [
             Link::make('Вернуться на сайт')
@@ -54,9 +54,9 @@ class PasteCreateScreen extends Screen
     /**
      * Views.
      *
-     * @return \Orchid\Screen\Layout[]|string[]
+     * @return array
      */
-    public function layout(): iterable
+    public function layout(): array
     {
         return [
             PasteCreateLayout::class,

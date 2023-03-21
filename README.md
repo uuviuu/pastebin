@@ -17,35 +17,23 @@
  - Заполнение базы через seeders
  - Тесты API
  - Верстка сайта на библиотеке Bootstrap
- 
 
 ## Установка
 
 - в папку с проектами установите репозиторий: git clone https://github.com/uuviuu/pastebin.git
-
 - sudo docker-compose up -d - установить зависимости из файла docker-compose.yml
-
-- sudo docker exec -it pastebin_app bash - войти в контейнер
-
-- composer update - установка библиотек PHP
-
-- composer dump-autoload - включение классов, которые используются в проекте
-
-- cp .env.example .env - создание файла .env
-
+- sudo docker exec -it pastebin_app bash 
+- composer update
+- composer dump-autoload
+- cp .env.example .env
 - cp .env .env.testing - создание файла .env.testing, после чего внести в нем правку:
-
    - APP_ENV=testing
-
-- php artisan key:generate - создание секретного ключа
-
+- php artisan key:generate
 - php artisan key:generate --env=testing
-
-- php artisan migrate - создает таблицы в БД
-
-- php artisan db:seed - заполняет таблицы
-
+- php artisan migrate
+- php artisan db:seed
 - php artisan test - тестирует API: получение всех паст, создание, чтение, удаление одной пасты
+- php artisan l5-swagger:generate 
 
 Контакты: 
 [почта](mailto:my.test.laravel.message@gmail.com) 

@@ -7,12 +7,17 @@ use App\Enums\ExpirationTime;
 use App\Http\Requests\CreatePasteRequest;
 use App\Models\Paste;
 use App\Service\PasteService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 
 class PasteController extends Controller
 {
+    /**
+     * @return Application|Factory|View
+     */
     public function pastes()
     {
         $access = Access::getValues();
@@ -29,6 +34,10 @@ class PasteController extends Controller
         ]);
     }
 
+    /**
+     * @param Paste $paste
+     * @return Application|Factory|View
+     */
     public function detail(Paste $paste)
     {
         PasteService::checkDetail($paste, Auth::user()['id'] ?? null);
@@ -39,15 +48,13 @@ class PasteController extends Controller
         ]);
     }
 
+    /**
+     * @param CreatePasteRequest $request
+     * @return RedirectResponse
+     */
     public function create(CreatePasteRequest $request): RedirectResponse
     {
-        $data = [
-            'created_by_id' => Auth::user()['id'] ?? null,
-            'paste' => nl2br($request->input('paste')),
-            'lang' => $request->input('lang'),
-            'paste_hash' => Str::random(),
-            'access' => $request->input('access'),
-        ];
+        $data = PasteService::createData($request, Auth::user()['id'] ?? null);
 
         $expirationTime = $request->input('expirationTime') == ExpirationTime::INFINITELY ? null : $request->input('expirationTime');
 

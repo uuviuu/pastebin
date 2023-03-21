@@ -7,11 +7,17 @@ use ReflectionClass;
 
 abstract class Enum
 {
+    /**
+     * @return array
+     */
     public static function getValues(): array
     {
         return array_values(static::getConstants());
     }
 
+    /**
+     * @return array
+     */
     public static function getConstants(): array
     {
         $constants = [];

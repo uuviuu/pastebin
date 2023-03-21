@@ -9,17 +9,19 @@ use App\Orchid\Layouts\User\UserEditLayout;
 use App\Orchid\Layouts\User\UserPasswordLayout;
 use App\Orchid\Layouts\User\UserRoleLayout;
 use App\Service\UserService;
+use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Orchid\Access\UserSwitch;
 use Orchid\Platform\Models\User;
-use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
 use Orchid\Support\Color;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
+use App\Models\User as CustomUser;
 
 class UserEditScreen extends Screen
 {
@@ -35,7 +37,7 @@ class UserEditScreen extends Screen
      *
      * @return array
      */
-    public function query(User $user): iterable
+    public function query(User $user): array
     {
         $user->load(['roles']);
 
@@ -48,9 +50,9 @@ class UserEditScreen extends Screen
     /**
      * Display header name.
      *
-     * @return string|null
+     * @return string
      */
-    public function name(): ?string
+    public function name(): string
     {
         return $this->user->exists ? 'Edit User' : 'Create User';
     }
@@ -58,17 +60,17 @@ class UserEditScreen extends Screen
     /**
      * Display header description.
      *
-     * @return string|null
+     * @return string
      */
-    public function description(): ?string
+    public function description(): string
     {
         return 'Details such as name, email and password';
     }
 
     /**
-     * @return iterable|null
+     * @return iterable
      */
-    public function permission(): ?iterable
+    public function permission(): iterable
     {
         return [
             'platform.systems.users',
@@ -78,9 +80,9 @@ class UserEditScreen extends Screen
     /**
      * Button commands.
      *
-     * @return Action[]
+     * @return array
      */
-    public function commandBar(): iterable
+    public function commandBar(): array
     {
         return [
             Button::make(__('Impersonate user'))
@@ -112,12 +114,11 @@ class UserEditScreen extends Screen
     }
 
     /**
-     * @return \Orchid\Screen\Layout[]
+     * @return array
      */
-    public function layout(): iterable
+    public function layout(): array
     {
         return [
-
             Layout::block(UserEditLayout::class)
                 ->title(__('Profile Information'))
                 ->description(__('Update your account\'s profile information and email address.'))
@@ -168,10 +169,9 @@ class UserEditScreen extends Screen
     /**
      * @param User    $user
      * @param Request $request
-     *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function save(User $user, Request $request)
+    public function save(User $user, Request $request): RedirectResponse
     {
         $request->validate([
             'user.email' => [
@@ -211,13 +211,11 @@ class UserEditScreen extends Screen
 
     /**
      * @param User $user
-     *
-     * @throws \Exception
-     *
-     * @return \Illuminate\Http\RedirectResponse
+     * @throws Exception
+     * @return RedirectResponse
      *
      */
-    public function remove(User $user)
+    public function remove(User $user): RedirectResponse
     {
         $user->delete();
 
@@ -227,12 +225,10 @@ class UserEditScreen extends Screen
     }
 
     /**
-     * @param User $user
-     *
-     * @throws \Exception
-     *
+     * @param CustomUser $user
+     * @return void
      */
-    public function ban(User $user)
+    public function ban(CustomUser $user): void
     {
         UserService::ban($user);
 
@@ -240,11 +236,10 @@ class UserEditScreen extends Screen
     }
 
     /**
-     * @param User $user
-     *
-     * @return \Illuminate\Http\RedirectResponse
+     * @param CustomUser $user
+     * @return RedirectResponse
      */
-    public function loginAs(User $user)
+    public function loginAs(CustomUser $user): RedirectResponse
     {
         UserSwitch::loginAs($user);
 

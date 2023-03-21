@@ -17,7 +17,7 @@ class PasteWithComplaintScreen extends Screen
      *
      * @return array
      */
-    public function query(): iterable
+    public function query(): array
     {
         $pastes = Paste::whereNotNull('complaint_message')
             ->where(function ($query) {
@@ -36,9 +36,9 @@ class PasteWithComplaintScreen extends Screen
     /**
      * Display header name.
      *
-     * @return string|null
+     * @return string
      */
-    public function name(): ?string
+    public function name(): string
     {
         return 'Все пасты';
     }
@@ -46,9 +46,9 @@ class PasteWithComplaintScreen extends Screen
     /**
      * Button commands.
      *
-     * @return \Orchid\Screen\Action[]
+     * @return array
      */
-    public function commandBar(): iterable
+    public function commandBar(): array
     {
         return [
             Link::make(__('Create'))
@@ -62,9 +62,9 @@ class PasteWithComplaintScreen extends Screen
     /**
      * Views.
      *
-     * @return \Orchid\Screen\Layout[]|string[]
+     * @return array
      */
-    public function layout(): iterable
+    public function layout(): array
     {
         return [
             PasteWithComplaintLayout::class,
@@ -73,8 +73,9 @@ class PasteWithComplaintScreen extends Screen
 
     /**
      * @param Request $request
+     * @return void
      */
-    public function remove(Request $request)
+    public function remove(Request $request): void
     {
         Paste::findOrFail($request->get('pasteHash'))->delete();
         Toast::info('Паста успешно удалена');

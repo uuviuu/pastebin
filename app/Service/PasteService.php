@@ -4,13 +4,19 @@ namespace App\Service;
 
 use App\Enums\Access;
 use App\Enums\ExpirationTime;
+use App\Http\Requests\CreatePasteRequest;
 use App\Models\Paste;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class PasteService
 {
-    public static function lastPastes()
+    /**
+     * @return Collection
+     */
+    public static function lastPastes(): Collection
     {
         return Paste::where(function ($query) {
                 $query->whereNull('expiration_time')
@@ -22,7 +28,12 @@ class PasteService
             ->get();
     }
 
-    public static function create($data, $expirationTime=null)
+    /**
+     * @param array $data
+     * @param string|null $expirationTime
+     * @return Paste|null
+     */
+    public static function create(array $data, string $expirationTime=null): ?Paste
     {
         $paste = null;
         try {
@@ -39,7 +50,28 @@ class PasteService
         return $paste;
     }
 
-    public static function complaint($pasteHash, $complaint)
+    /**
+     * @param CreatePasteRequest $request
+     * @param int|null $user_id
+     * @return array
+     */
+    public static function createData(CreatePasteRequest $request, int $user_id=null): array
+    {
+        return [
+            'created_by_id' => $user_id,
+            'paste' => nl2br($request->input('paste')),
+            'lang' => $request->input('lang'),
+            'paste_hash' => Str::random(),
+            'access' => $request->input('access'),
+        ];
+    }
+
+    /**
+     * @param string $pasteHash
+     * @param string $complaint
+     * @return Paste
+     */
+    public static function complaint(string $pasteHash, string $complaint): Paste
     {
         $paste = Paste::findOrFail($pasteHash);
         $paste->complaint_message = $complaint;
@@ -48,15 +80,24 @@ class PasteService
         return $paste;
     }
 
-    public static function expirationTime($stringTime): ?Carbon
+    /**
+     * @param string $stringTime
+     * @return Carbon|null
+     */
+    public static function expirationTime(string $stringTime): ?Carbon
     {
         $addTime = explode(' ', $stringTime);
 
         return $stringTime == ExpirationTime::INFINITELY ? null
-            : Carbon::now()->add(trans('timeIntervals.' . $addTime[1]), $addTime[0]);
+            : Carbon::now()->add(trans('timeIntervals.' . $addTime[1]), (int) $addTime[0]);
     }
 
-    public static function checkDetail($paste, $userId)
+    /**
+     * @param Paste $paste
+     * @param int $userId
+     * @return void
+     */
+    public static function checkDetail(Paste $paste, int $userId): void
     {
         if ($paste->expiration_time < Carbon::now() && $paste->expiration_time != null) {
             abort(404);

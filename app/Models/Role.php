@@ -9,14 +9,23 @@ class Role extends Model
 {
     use HasFactory;
 
+    /**
+     * @var string
+     */
     protected $table = 'roles';
 
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'slug',
         'name',
         'permissions',
     ];
 
+    /**
+     * @var string[]
+     */
     protected $casts = [
         'permissions' => 'array',
     ];

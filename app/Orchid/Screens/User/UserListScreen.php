@@ -11,10 +11,12 @@ use App\Service\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Orchid\Platform\Models\User;
+use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
+use App\Models\User as CustomUser;
 
 class UserListScreen extends Screen
 {
@@ -23,7 +25,7 @@ class UserListScreen extends Screen
      *
      * @return array
      */
-    public function query(): iterable
+    public function query(): array
     {
         return [
             'users' => User::with('roles')
@@ -67,7 +69,7 @@ class UserListScreen extends Screen
     /**
      * Button commands.
      *
-     * @return \Orchid\Screen\Action[]
+     * @return Action[]
      */
     public function commandBar(): iterable
     {
@@ -139,7 +141,7 @@ class UserListScreen extends Screen
      */
     public function ban(Request $request): void
     {
-        $user = User::findOrFail($request->get('id'));
+        $user = CustomUser::findOrFail($request->get('id'));
         UserService::ban($user);
 
         Toast::info('Выполнено');

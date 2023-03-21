@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-
 use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
@@ -10,7 +9,13 @@ use Illuminate\Support\Str;
 
 class UserService
 {
-    public static function createUser($name, $email, $password)
+    /**
+     * @param string $name
+     * @param string $email
+     * @param string $password
+     * @return User
+     */
+    public static function createUser(string $name, string $email, string $password): User
     {
         $user = User::create([
             'name' => $name,
@@ -33,7 +38,11 @@ class UserService
         return $user;
     }
 
-    public static function ban($user)
+    /**
+     * @param User $user
+     * @return User
+     */
+    public static function ban(User $user): User
     {
         $permissions = $user->permissions;
         $permissions['platform.index'] = !$permissions['platform.index'];
@@ -43,6 +52,4 @@ class UserService
 
         return $user;
     }
-
-
 }

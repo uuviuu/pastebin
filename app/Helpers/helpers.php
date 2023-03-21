@@ -1,9 +1,13 @@
 <?php
 
 use App\Http\Responses\ApiJsonResponse;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Arrayable;
 
 if (!function_exists('apiResponse')) {
+    /**
+     * @return Application|mixed
+     */
     function apiResponse()
     {
         return app(ApiJsonResponse::class);
@@ -11,6 +15,10 @@ if (!function_exists('apiResponse')) {
 }
 
 if (!function_exists('br2nl')) {
+    /**
+     * @param $string
+     * @return array|string|string[]|null
+     */
     function br2nl($string)
     {
         return preg_replace("/\<br(\s*)?\/?\>/i", "", $string);
@@ -18,6 +26,10 @@ if (!function_exists('br2nl')) {
 }
 
 if (!function_exists('translateToCamelCase')) {
+    /**
+     * @param $jsonData
+     * @return array
+     */
     function translateToCamelCase($jsonData): array
     {
         return translateJsonCase($jsonData, function ($key) {
@@ -37,7 +49,7 @@ if (!function_exists('translateJsonCase')) {
      * @param callable $transformFunction
      * @return array
      */
-    function translateJsonCase($jsonData, callable $transformFunction)
+    function translateJsonCase($jsonData, callable $transformFunction): array
     {
         if ($jsonData instanceof Arrayable) {
             $jsonData = $jsonData->toArray();

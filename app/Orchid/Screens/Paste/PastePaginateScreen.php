@@ -18,7 +18,7 @@ class PastePaginateScreen extends Screen
      *
      * @return array
      */
-    public function query(): iterable
+    public function query(): array
     {
         $pastes = Auth::user()
             ->pastes()
@@ -38,9 +38,9 @@ class PastePaginateScreen extends Screen
     /**
      * Display header name.
      *
-     * @return string|null
+     * @return string
      */
-    public function name(): ?string
+    public function name(): string
     {
         return 'Все пасты';
     }
@@ -48,9 +48,9 @@ class PastePaginateScreen extends Screen
     /**
      * Button commands.
      *
-     * @return \Orchid\Screen\Action[]
+     * @return array
      */
-    public function commandBar(): iterable
+    public function commandBar(): array
     {
         return [
             Link::make(__('Create'))
@@ -64,9 +64,9 @@ class PastePaginateScreen extends Screen
     /**
      * Views.
      *
-     * @return \Orchid\Screen\Layout[]|string[]
+     * @return array
      */
-    public function layout(): iterable
+    public function layout(): array
     {
         return [
             PastePaginateLayout::class,
@@ -75,8 +75,9 @@ class PastePaginateScreen extends Screen
 
     /**
      * @param Request $request
+     * @return void
      */
-    public function remove(Request $request)
+    public function remove(Request $request): void
     {
         Paste::findOrFail($request->get('pasteHash'))->delete();
         Toast::info('Паста успешно удалена');

@@ -8,34 +8,55 @@ use App\Models\SocialAccount;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use App\Service\UserService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
+use Laravel\Socialite\Contracts\User as ContractUser ;
 
 class LoginController extends Controller
 {
+    /**
+     * @return Application|Factory|View
+     */
     public function registration()
     {
         return view('auth.registration');
     }
 
+    /**
+     * @param CreateUserRequest $request
+     * @return RedirectResponse
+     */
     public function createUser(CreateUserRequest $request): RedirectResponse
     {
         $name = $request->get('name');
         $email = $request->get('email');
         $password = Hash::make($request->get('password'));
+
         UserService::createUser($name, $email, $password);
 
         return redirect(RouteServiceProvider::HOME);
     }
 
-    public function redirectToProvider($provider)
+    /**
+     * @param string $provider
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function redirectToProvider(string $provider)
     {
         return Socialite::driver($provider)->redirect();
     }
 
-    public function handleProviderCallback($provider)
+    /**
+     * @param string $provider
+     * @return Application|RedirectResponse|Redirector
+     */
+    public function handleProviderCallback(string $provider)
     {
         $socialiteUser = Socialite::driver($provider)->user();
 
@@ -46,7 +67,12 @@ class LoginController extends Controller
         return redirect('/');
     }
 
-    public function findOrCreateUser($provider, $socialiteUser)
+    /**
+     * @param string $provider
+     * @param ContractUser $socialiteUser
+     * @return User
+     */
+    public function findOrCreateUser(string $provider, ContractUser $socialiteUser): User
     {
         $account = $this->findUserBySocialId($provider, $socialiteUser->getId());
         if ($account) {
@@ -69,7 +95,12 @@ class LoginController extends Controller
         return $user;
     }
 
-    public function findUserBySocialId($provider, $id)
+    /**
+     * @param string $provider
+     * @param string $id
+     * @return null|SocialAccount
+     */
+    public function findUserBySocialId(string $provider, string $id): ?SocialAccount
     {
         return SocialAccount::where([
             ['provider', $provider],
@@ -77,12 +108,22 @@ class LoginController extends Controller
         ])->first();
     }
 
-    public function findUserByEmail($email)
+    /**
+     * @param string $email
+     * @return null|User
+     */
+    public function findUserByEmail(string $email): ?User
     {
         return !$email ? null : User::where('email', $email)->first();
     }
 
-    public function addSocialAccount($provider, $user, $socialiteUser)
+    /**
+     * @param string $provider
+     * @param User $user
+     * @param ContractUser $socialiteUser
+     * @return void
+     */
+    public function addSocialAccount(string $provider, User $user, ContractUser $socialiteUser): void
     {
         SocialAccount::create([
             'user_id' => $user->id,
