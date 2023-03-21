@@ -1,23 +1,38 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\API;
 
 use App\Exceptions\UserNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Service\UserService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
+use OpenApi\Annotations as OA;
 
 class ApiUserController extends Controller
 {
     /**
-     * @throws ValidationException
+     * @OA\Get(
+     * path="/users",
+     * tags={"Users"},
+     *     @OA\Response(
+     *         response="200",
+     *         description="OK",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             )
+     *         )
+     *     ),
+     * )
+     * @param Request $request
+     * @return JsonResponse
      * @throws UserNotFoundException
+     * @throws ValidationException
      */
-    public function paginate(Request $request)
+    public function paginate(Request $request): JsonResponse
     {
         $this->validate($request, [
             'api_token' => 'required|string|max:80',
@@ -35,12 +50,26 @@ class ApiUserController extends Controller
     }
 
     /**
+     * @OA\Post(
+     * path="/users/ban",
+     * tags={"Users"},
+     *     @OA\Response(
+     *         response="200",
+     *         description="OK",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             )
+     *         )
+     *     ),
+     * )
+     *
      * @param Request $request
      * @return mixed
      * @throws ValidationException
      * @throws UserNotFoundException
+     * @return JsonResponse
      */
-    public function ban(Request $request)
+    public function ban(Request $request): JsonResponse
     {
         $this->validate($request, [
             'api_token' => 'required|string|max:80',

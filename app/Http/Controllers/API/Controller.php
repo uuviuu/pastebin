@@ -6,10 +6,10 @@ use OpenApi\Annotations as OA;
 
 /**
  * @OA\Info(
- *     title="Laravel Swagger API documentation example",
+ *     title="Pastebin API",
  *     version="1.0.0",
  *     @OA\Contact(
- *         email="admin@example.com"
+ *         email="admin@admin.com"
  *     ),
  *     @OA\License(
  *         name="Apache 2.0",
@@ -17,8 +17,10 @@ use OpenApi\Annotations as OA;
  *     )
  * )
  * @OA\Tag(
- *     name="Examples",
- *     description="Some example pages",
+ *     name="Users",
+ * )
+ * @OA\Tag(
+ *     name="Pastes",
  * )
  * @OA\Server(
  *     description="Laravel Swagger API server",
