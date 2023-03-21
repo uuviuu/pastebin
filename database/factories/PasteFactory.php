@@ -28,8 +28,11 @@ class PasteFactory extends Factory
             'expiration_time' => null,
             'access'  => $access[array_rand($access)],
             'paste_hash'  => Str::random(),
-            'lang'  =>  'php',
-            'paste'  =>  $this->faker->text(20),
+            'lang'  =>  'PHP',
+            'paste'  =>  "public function hello(): string
+{
+    echo 'Hello world!';
+}",
         ];
     }
 }

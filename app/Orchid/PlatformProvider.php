@@ -42,10 +42,7 @@ class PlatformProvider extends OrchidServiceProvider
 
             Menu::make('API')
                 ->icon('code')
-                ->list([
-                    Menu::make('Документация')->icon('bag')
-                        ->url('api/documentation'),
-                ]),
+                ->url('api/documentation'),
 
             Menu::make(__('Users'))
                 ->icon('user')

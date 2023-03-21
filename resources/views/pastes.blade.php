@@ -47,17 +47,18 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label> Паста* </label>
-                            <textarea class="form-control" required name="paste" id="paste"
+                            <textarea rows="8" class="form-control" required name="paste" id="paste"
                                       placeholder="Введите пасту"></textarea>
                             @error('paste')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group">
-                            <label> Язык* </label>
-                            <input type="text" class="form-control" required name="locale" id="locale"
-                                   placeholder="Введите язык">
-                        </div>
+                        <label> Язык* </label>
+                        <select class="custom-select mr-sm-2" required id="lang" name="lang">
+                            @foreach ($langs as $value)
+                                <option value="{{ $value }}">{{ $value }}</option>
+                            @endforeach
+                        </select>
                         <label> Доступность* </label>
                         <select class="custom-select mr-sm-2" required id="access" name="access">
                             @foreach ($access as $value)

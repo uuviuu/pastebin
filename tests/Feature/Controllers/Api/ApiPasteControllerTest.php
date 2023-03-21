@@ -49,7 +49,7 @@ class ApiPasteControllerTest extends TestCase
                 'expiration_time' => null,
                 'access'  => Access::PUBLIC,
                 'paste_hash'  => Str::random(),
-                'locale'  =>  'php',
+                'lang'  =>  'PHP',
                 'paste'  =>  'test paste',
             ]
         );

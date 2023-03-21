@@ -32,13 +32,12 @@
                 <div class="mb-3 card-header">
                     <h4 class="card-title"> Паста № {{ $paste->id }}</h4>
                 </div>
-                <div class="mb-3">
-                    <textarea class="form-control" required name="paste" id="paste"
-                              placeholder="{{ $paste->paste }}">{{ $paste->paste }}</textarea>
-                </div>
-                <div class="mb-3">
-                    <textarea class="form-control" required name="paste" id="paste"
-                              placeholder="{{ $paste->paste_hash }}">{{ route('pastes.detail', $paste->paste_hash) }}</textarea>
+                <label class="m-3" > Паста: </label>
+                    <pre class="prettyprint">{{ $paste->paste }}</pre>
+                <label class="m-3"> Язык: </label>
+                    <input class="form-control" value="{{ $paste->lang }}">
+                <label class="m-3"> Ссылка: </label>
+                    <textarea class="form-control">{{ route('pastes.detail', $paste->paste_hash) }}</textarea>
                 </div>
             </div>
         </div>
@@ -46,6 +45,7 @@
 
 </div>
 
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">

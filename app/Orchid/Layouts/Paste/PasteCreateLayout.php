@@ -6,8 +6,8 @@ use App\Enums\Access;
 use App\Enums\ExpirationTime;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Field;
-use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Select;
+use Orchid\Screen\Fields\TextArea;
 use Orchid\Screen\Layouts\Rows;
 use Orchid\Support\Color;
 
@@ -21,13 +21,14 @@ class PasteCreateLayout extends Rows
     protected function fields(): array
     {
         return [
-            Input::make('paste')
+            TextArea::make('paste')
                 ->required()
-                ->type('text')
+                ->rows(8)
                 ->title('Паста'),
-            Input::make('locale')
-                ->type('text')
-                ->title('Язык'),
+            Select::make('lang')
+                ->options(array_combine(['PHP','C','C++','C#','Python','JS'], ['PHP','C','C++','C#','Python','JS']))
+                ->title('Язык')
+                ->help('Выберете значение'),
             Select::make('access')
                 ->options(array_combine(Access::getValues(), Access::getValues()))
                 ->title('Доступность')

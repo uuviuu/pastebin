@@ -131,8 +131,8 @@ class ApiPasteController extends Controller
     {
         $data = [
             'created_by_id' => Auth::user()['id'] ?? null,
-            'paste' => $request->input('paste'),
-            'lang' => $request->input('locale'),
+            'paste' => nl2br($request->input('paste')),
+            'lang' => $request->input('lang'),
             'paste_hash' => Str::random(),
             'access' => $request->input('access'),
         ];

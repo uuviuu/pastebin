@@ -22,6 +22,7 @@ class PasteController extends Controller
         }
 
         return view('pastes', [
+            'langs' => ['PHP','C','C++','C#','Python','JS'],
             'access' => $access,
             'expirationTime' => ExpirationTime::getValues(),
             'lastPastes' => PasteService::lastPastes(),
@@ -31,6 +32,7 @@ class PasteController extends Controller
     public function detail(Paste $paste)
     {
         PasteService::checkDetail($paste, Auth::user()['id'] ?? null);
+        $paste->paste = br2nl($paste->paste);
 
         return view('paste_detail', [
             'paste' => $paste,
@@ -41,8 +43,8 @@ class PasteController extends Controller
     {
         $data = [
             'created_by_id' => Auth::user()['id'] ?? null,
-            'paste' => $request->input('paste'),
-            'lang' => $request->input('locale'),
+            'paste' => nl2br($request->input('paste')),
+            'lang' => $request->input('lang'),
             'paste_hash' => Str::random(),
             'access' => $request->input('access'),
         ];
@@ -51,6 +53,10 @@ class PasteController extends Controller
 
         $paste = PasteService::create($data, $expirationTime);
 
-        return redirect()->route('pastes.detail', $paste);
+        if (!$paste) {
+            return redirect('', 500);
+        }
+
+        return redirect()->route('pastes.detail', $paste->paste_hash);
     }
 }

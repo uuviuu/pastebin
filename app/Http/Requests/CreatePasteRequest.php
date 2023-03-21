@@ -27,10 +27,10 @@ class CreatePasteRequest extends FormRequest
     {
         return [
             'api_token' => 'string|max:80',
-            'paste' => 'required|string|max:255',
+            'paste' => 'required|string',
+            'lang' => 'required|string|in:PHP,C,C++,C#,Python,JS',
             'access' => 'required|string|in:'
                 . implode(',', Access::getValues()),
-            'locale' => 'required|string|max:10',
             'expirationTime' => 'string|in:'
                 . implode(',', ExpirationTime::getValues()),
         ];

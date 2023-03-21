@@ -21,7 +21,7 @@ class CreatePastesTable extends Migration
             $table->string('access', 50);
             $table->string('paste_hash', 16)->unique();
             $table->string('lang', 10);
-            $table->string('paste', 255);
+            $table->string('paste');
             $table->string('complaint_message', 255)->nullable();
             $table->softDeletes();
             $table->timestamps();

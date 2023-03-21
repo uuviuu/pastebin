@@ -47,15 +47,18 @@ class PasteDetailScreen extends Screen
     public function commandBar(): iterable
     {
         return [
-            Link::make(__('Create'))
-                ->icon('plus')
-                ->route('platform.pastes.create'),
+            Link::make('Посмотреть на сайте')
+                ->icon('eye')
+                ->route('pastes.detail', $this->paste->paste_hash),
             ModalToggle::make('Пожаловаться')
                 ->icon('pencil')
                 ->modal('complaintModal')
                 ->method('complaint'),
             Link::make('Вернуться на сайт')
                 ->route('pastes'),
+            Link::make(__('Create'))
+                ->icon('plus')
+                ->route('platform.pastes.create'),
         ];
     }
 
@@ -72,10 +75,15 @@ class PasteDetailScreen extends Screen
             Layout::rows([
                 TextArea::make('paste')
                     ->title('Паста')
+                    ->rows(8)
                     ->placeholder($this->paste->paste)
                     ->value($this->paste->paste),
-                TextArea::make('paste')
-                    ->title('Паста')
+                Input::make('lang')
+                    ->title('Язык')
+                    ->placeholder($this->paste->lang)
+                    ->value($this->paste->lang),
+                TextArea::make('link')
+                    ->title('Ссылка на пасту')
                     ->placeholder(route('pastes.detail', $this->paste->paste_hash))
                     ->value(route('pastes.detail', $this->paste->paste_hash)),
             ]),
