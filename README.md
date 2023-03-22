@@ -35,6 +35,10 @@
 - php artisan test - тестирует API: получение всех паст, создание, чтение, удаление одной пасты
 - php artisan l5-swagger:generate 
 
+Вход в админку за админа возможен по данным:
+admin@admin.com 
+password
+
 Контакты: 
 [почта](mailto:my.test.laravel.message@gmail.com) 
 [telegram](https://t.me/uuviuu)
